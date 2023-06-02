@@ -1,12 +1,9 @@
 import { createRoot } from 'react-dom/client';
+import { MainView } from "./components/main-vew/main-view"
 import "./index.scss";
 
 const MyFlixApplication = () => {
-    return (
-        <div className="my-flix">
-            <div>Good Morning</div>
-        </div>
-    );
+    return <MainView />
 };
 
 const container = document.querySelector("#root");
