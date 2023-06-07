@@ -15,7 +15,7 @@ export const MainView = () => {
     useEffect(() => {
         if(!token){
             return;}
-        fetch("https://agile-beach-16603.herokuapp.com/movies", {headers: {Authorization: 'Bearer ${token}'}})
+        fetch("https://agile-beach-16603.herokuapp.com/movies", {headers: {Authorization: 'bearer ${token}'},})
         .then((response) => response.json())
         .then((data) => {
             console.log('data', data);
@@ -42,7 +42,7 @@ export const MainView = () => {
             setMovies(movies)
         })
         .catch((error) => {
-            console.log('Error fetching movies:', error)
+            console.log('Error fetching movies:', error, data, movies, moviesFromApi, Headers)
         })
     }, [token])
 
@@ -75,7 +75,7 @@ export const MainView = () => {
     }
     return (
         <div>
-            <button onClick={() => { setUser(null); setToken(null); localStorage.clear() }}>Logout</button>
+            <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
             {movies.map((movie) => (
                 <MovieCard
                 key={movie._id}
@@ -85,6 +85,7 @@ export const MainView = () => {
                 }}
                 />
             ))}
+            <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
         </div>
     )
 };
