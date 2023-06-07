@@ -1,26 +1,26 @@
 import { useState } from "react";
 
 export const LoginView = ({ onLoggedIn }) =>{
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [Username, setUsername] = useState("");
+    const [Password, setPassword] = useState("");
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = {
-            Username: username,
-            Password: password,
+            Username: Username,
+            Password: Password
         }
         fetch("https://agile-beach-16603.herokuapp.com/login", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
         }).then ((response) => response.json())
         .then((data) =>{
             console.log("Login response: ", data);
-            if (data.user) {
-                localStorage.setItem("user", JSON.stringify(data.user));
+            if (data) {
+                localStorage.setItem("user", JSON.stringify(data.username));
                 localStorage.setItem("token", data.token);
                 onLoggedIn(data.user, data.token);
             }
@@ -40,16 +40,18 @@ export const LoginView = ({ onLoggedIn }) =>{
                 Username:
                 <input
                 type="text"
-                value={username}
+                value={Username}
                 onChange={(e) => setUsername(e.target.value)}
+                required
                 />
             </label>
             <label>
                 Password:
                 <input
                 type="password"
-                value={password}
+                value={Password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
                 />
             </label>
             <button type="submit">Submit</button>

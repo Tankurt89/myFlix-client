@@ -5,8 +5,8 @@ import { LoginView } from '../login-view/login-view';
 import { SignupView } from '../signup-view/signup-view';
 
 export const MainView = () => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    const storedToken = localStorage.getItem('token');
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedToken = localStorage.getItem("token");
     const [user, setUser] = useState(storedUser? storedUser: null);
     const [token, setToken] =useState(storedToken? storedToken: null);
     const [movies, setMovies] = useState([]);
@@ -15,7 +15,7 @@ export const MainView = () => {
     useEffect(() => {
         if(!token){
             return;}
-        fetch("https://agile-beach-16603.herokuapp.com/movies", {headers: {Authorization: 'bearer ${token}'},})
+        fetch("https://agile-beach-16603.herokuapp.com/movies", {headers: {Authorization: 'bearer ${token}'}})
         .then((response) => response.json())
         .then((data) => {
             console.log('data', data);
@@ -38,18 +38,15 @@ export const MainView = () => {
             })
             setMovies(moviesFromApi);
         })
-        .then((movies) => {
-            setMovies(movies)
-        })
         .catch((error) => {
-            console.log('Error fetching movies:', error, data, movies, moviesFromApi, Headers)
+            console.log('Error fetching movies:', error)
         })
-    }, [token])
+    }, [])
 
     if (!user) {
         return (
             <>
-            <LoginView onLoggedIn={(user, token) => {setUser(user); setToken(token)}} />
+            <LoginView onLoggedIn={(user, token) => {setUser(user), setToken(token)}} />
             or
             <SignupView />
             </>
@@ -68,14 +65,14 @@ export const MainView = () => {
     if (movies.length === 0) {
         return(
         <>
-        <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
+        <button onClick={() => { setUser(null); setToken(null), localStorage.clear(); }}>Logout</button>
         <div>The list is empty!</div>;
         </>
         );
     }
     return (
         <div>
-            <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
+            <button onClick={() => { setUser(null); setToken(null), localStorage.clear() }}>Logout</button>
             {movies.map((movie) => (
                 <MovieCard
                 key={movie._id}
@@ -85,7 +82,6 @@ export const MainView = () => {
                 }}
                 />
             ))}
-            <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
         </div>
     )
 };
