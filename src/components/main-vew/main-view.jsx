@@ -15,7 +15,7 @@ export const MainView = () => {
     useEffect(() => {
         if(!token){
             return;}
-        fetch("https://agile-beach-16603.herokuapp.com/movies", {headers: {Authorization: 'bearer ${token}'}})
+        fetch("https://agile-beach-16603.herokuapp.com/movies", {headers: {Authorization: `bearer ${token}`}})
         .then((response) => response.json())
         .then((data) => {
             console.log('data', data);
@@ -41,7 +41,7 @@ export const MainView = () => {
         .catch((error) => {
             console.log('Error fetching movies:', error)
         })
-    }, [])
+    }, [token])
 
     if (!user) {
         return (
