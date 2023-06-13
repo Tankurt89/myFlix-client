@@ -16,8 +16,8 @@ MovieCard.propTypes = {
     movie: PropTypes.shape({
         _id: PropTypes.string.isRequired,
         Title: PropTypes.string.isRequired,
-        Director: PropTypes.arrayOf(PropTypes.string).isRequired,
-        Genre: PropTypes.arrayOf(PropTypes.string).isRequired,
+        Director: PropTypes.objectOf(PropTypes.string).isRequired,
+        Genre: PropTypes.objectOf(PropTypes.string).isRequired,
     }).isRequired,
     onMovieClick: PropTypes.func.isRequired,
 }
