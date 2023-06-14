@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Form, Button, Card, CardGroup, Container, Col, Row} from 'react-bootstrap'
 
 export const LoginView = ({ onLoggedIn }) =>{
     const [Username, setUsername] = useState("");
@@ -35,26 +36,35 @@ export const LoginView = ({ onLoggedIn }) =>{
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Username:
-                <input
-                type="text"
-                value={Username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                />
-            </label>
-            <label>
-                Password:
-                <input
-                type="password"
-                value={Password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                />
-            </label>
-            <button type="submit">Submit</button>
-        </form>
+        <Container>
+            <Row>
+                <Col>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId="formUsername">
+                            <Form.Label>Username:</Form.Label>
+                            <Form.Control
+                                style={{border:"2px solid black"}}
+                                type="text"
+                                value={Username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formPassword">
+                            <Form.Label>Password:</Form.Label>
+                            <Form.Control
+                                style={{border:"2px solid black"}}
+                                type="password"
+                                value={Password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
+                        <br></br>
+                        <Button variant="primary" type="submit">Submit</Button>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     )
 }
