@@ -33,6 +33,7 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
         .then(user => {
             if (user) {
                 alert("Successfully changed profile");
+                localStorage.setItem('user', JSON.stringify(user))
                 updateUser(user);
             }
         })
@@ -64,9 +65,8 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
                 <Card className="mt-1 mb-2">
                     <Card.Body>
                         <Card.Title >Profile</Card.Title>
-                        <p>Username: {Username}</p>
-                        <p>Email: {Email}</p>
-                        <p>Birthday: {Birthday}</p>
+                        <p>Username: {user.Username}</p>
+                        <p>Email: {user.Email}</p>
                     </Card.Body>
                 </Card>
                 <Button variant="danger" onClick={() => {
