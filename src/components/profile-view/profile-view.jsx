@@ -14,7 +14,7 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
 
         const data = JSON.parse(localStorage.getItem('user'))
         
-        fetch(`https://agile-beach-16603.herokuapp.com/users/${user.Username}`, {
+        fetch(`https://agile-beach-16603.herokuapp.com/users/${token}`, {
             method: "PUT",
             body: JSON.stringify(data),
             headers: {
@@ -43,7 +43,7 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
     }
 
     const deleteAccount = () => {
-        fetch(`https://agile-beach-16603.herokuapp.com/users/${user.Username}`, {
+        fetch(`https://agile-beach-16603.herokuapp.com/users/${token}`, {
             method: "DELETE",
             headers: { Authorization: `bearer ${token}` }
         })
