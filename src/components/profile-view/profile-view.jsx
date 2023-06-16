@@ -5,8 +5,7 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState("");
-    const [Birthday, setBirthday] = useState();
-    
+
     // let favoriteMovies = movies.filter(movie => user.favoriteMovies.includes(movie._id))
 
     const handleSubmit = event => {
@@ -14,7 +13,7 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
 
         const data = JSON.parse(localStorage.getItem('user'))
         
-        fetch(`https://agile-beach-16603.herokuapp.com/users/${token}`, {
+        fetch(`https://agile-beach-16603.herokuapp.com/users`, {
             method: "PUT",
             body: JSON.stringify(data),
             headers: {
@@ -80,46 +79,30 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
                     <Card.Body>
                         <Card.Title>Update your info</Card.Title>
                         <Form onSubmit={handleSubmit}>
-                            <Form.Group>
+                            <Form.Group controlId="formUsername">
                                 <Form.Label>Username:</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={Username}
                                     onChange={e => setUsername(e.target.value)}
-                                    required
                                     minLength="5"
-                                    className="bg-light"
                                 />
                             </Form.Group>
-                            <Form.Group>
+                            <Form.Group controlId="formPassword">
                                 <Form.Label>Password:</Form.Label>
                                 <Form.Control
                                     type="Password"
                                     value={Password}
                                     onChange={e => setPassword(e.target.value)}
-                                    required
                                     minLength="6"
-                                    className="bg-light"
                                 />
                             </Form.Group>
-                            <Form.Group>
+                            <Form.Group controlId="formEmail">
                                 <Form.Label>Email:</Form.Label>
                                 <Form.Control
                                     type="Email"
                                     value={Email}
                                     onChange={e => setEmail(e.target.value)}
-                                    required
-                                    className="bg-light"
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Birthday:</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    value={Birthday}
-                                    onChange={e => setBirthday(e.target.value)}
-                                    required
-                                    className="bg-light"
                                 />
                             </Form.Group>
                             <Button className="mt-3" variant="primary" type="submit">Submit</Button>
@@ -128,7 +111,13 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
                 </Card>
             </Col>
             <Col md={12}>
-                <h3 className="mt-3 mb-3 text-light">Your favorite movies:</h3>
+                <Card className="mt-2 mb-3">
+                    <Card.Body>
+                        <Card.Title>Favorite Movies:</Card.Title>
+
+                    </Card.Body>
+                </Card>
+                
             </Col>
             {/* {favoriteMovies.map(movie => (
                 <Col className="mb-4" key={movie.id} xl={2} lg={3} md={4} xs={6}>
