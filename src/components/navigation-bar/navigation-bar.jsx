@@ -1,7 +1,7 @@
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Form, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export const NavigationBar = ({ user, onLoggedOut }) => {
+export const NavigationBar = ({ user, onLoggedOut, searchTerm, onSearchTermChange }) => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -28,6 +28,17 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 </Nav.Link>
                 <Nav.Link as={Link} to={"/users"}>Profile</Nav.Link>
                 <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
+                <div className="ml-auto align-items-center">
+                <Form>
+                  <div className="search-bar">
+                    <FormControl
+                    type="search"
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={(e) => onSearchTermChange(e.target.value)}/>
+                  </div>
+                </Form>
+              </div>
               </>
             )}
           </Nav>
