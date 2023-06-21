@@ -1,19 +1,27 @@
 import { useState, useEffect } from "react"
 import { Card, Col, Form, Button } from "react-bootstrap"
+import bcrypt from "bcryptjs"
+import { MovieCard } from "../movie-card/movie-card"
 
 export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) => {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState("");
 
-    // let favoriteMovies = movies.filter(movie => user.favoriteMovies.includes(movie._id))
+    // const favoriteMovies = movies.filter(movie => user.favoriteMovies.includes(movie._id))
 
     const handleSubmit = event => {
         event.preventDefault();
 
-        const data = JSON.parse(localStorage.getItem('user'))
+        const hashedPassword = bcrypt.hashSync(Password, 10)
+
+        const data = {
+            Username: Username,
+            Password: hashedPassword,
+            Email: Email,
+        }
         
-        fetch(`https://agile-beach-16603.herokuapp.com/users`, {
+        fetch(`https://agile-beach-16603.herokuapp.com/users/${user.Username}`, {
             method: "PUT",
             body: JSON.stringify(data),
             headers: {
@@ -32,7 +40,6 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
         .then(user => {
             if (user) {
                 alert("Successfully changed profile");
-                localStorage.setItem('user', JSON.stringify(user))
                 updateUser(user);
             }
         })
@@ -40,9 +47,8 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
             alert(e);
         });
     }
-
     const deleteAccount = () => {
-        fetch(`https://agile-beach-16603.herokuapp.com/users/${token}`, {
+        fetch(`https://agile-beach-16603.herokuapp.com/users/${user.Username}`, {
             method: "DELETE",
             headers: { Authorization: `bearer ${token}` }
         })
@@ -114,16 +120,15 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
                 <Card className="mt-2 mb-3">
                     <Card.Body>
                         <Card.Title>Favorite Movies:</Card.Title>
-
+                        {/* {favoriteMovies.map((movies)=>{ */}
+                            <Col className="mb-4" key={movies._id}>
+                                <MovieCard movie={movies} />
+                            </Col> 
+                            {/* })} */}
                     </Card.Body>
                 </Card>
                 
             </Col>
-            {/* {favoriteMovies.map(movie => (
-                <Col className="mb-4" key={movie.id} xl={2} lg={3} md={4} xs={6}>
-                    <MovieCard movie={movie} />
-                </Col> */}
-            {/* ))} */}
         </>
     );
 }
