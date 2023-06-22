@@ -7,8 +7,10 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState("");
+    const storedUser = JSON.parse(localStorage.getItem("user"))
+    console.log(storedUser)
 
-    // const favoriteMovies = movies.filter(movie => user.favoriteMovies.includes(movie._id))
+    // const favoriteMovies = movies.filter((movie) => storedUser.favoriteMovies.includes(movie._id))
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -21,7 +23,9 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
             Email: Email,
         }
         
-        fetch(`https://agile-beach-16603.herokuapp.com/users/${user.Username}`, {
+
+
+        fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser.Username}`, {
             method: "PUT",
             body: JSON.stringify(data),
             headers: {
@@ -70,8 +74,8 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
                 <Card className="mt-1 mb-2">
                     <Card.Body>
                         <Card.Title >Profile</Card.Title>
-                        <p>Username: {user.Username}</p>
-                        <p>Email: {user.Email}</p>
+                        <p>Username: {storedUser.Username}</p>
+                        <p>Email: {storedUser.Email}</p>
                     </Card.Body>
                 </Card>
                 <Button variant="danger" onClick={() => {
@@ -120,11 +124,11 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
                 <Card className="mt-2 mb-3">
                     <Card.Body>
                         <Card.Title>Favorite Movies:</Card.Title>
-                        {/* {favoriteMovies.map((movies)=>{ */}
+                            {/* {favoriteMovies.map((movies)=>{
                             <Col className="mb-4" key={movies._id}>
                                 <MovieCard movie={movies} />
                             </Col> 
-                            {/* })} */}
+                            })} */}
                     </Card.Body>
                 </Card>
                 
