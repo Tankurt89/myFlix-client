@@ -7,10 +7,24 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState("");
+    const [Info, setInfo ] = useState("")
     const storedUser = JSON.parse(localStorage.getItem("user"))
-    console.log(storedUser)
 
     // const favoriteMovies = movies.filter((movie) => storedUser.favoriteMovies.includes(movie._id))
+
+    useEffect(() => {
+        console.log('hello')
+        if(!token){
+            return;}
+        fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser}`, {headers: {Authorization: `bearer ${token}`}})
+        .then((response) => response.json())
+        .then((storedInfo) => {
+            setInfo(storedInfo)
+            })
+        .catch((error) => {
+            console.log('Error fetching user:', error)
+        })
+    }, [token])
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -22,10 +36,8 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
             Password: hashedPassword,
             Email: Email,
         }
-        
 
-
-        fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser.Username}`, {
+        fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser}`, {
             method: "PUT",
             body: JSON.stringify(data),
             headers: {
@@ -52,7 +64,7 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
         });
     }
     const deleteAccount = () => {
-        fetch(`https://agile-beach-16603.herokuapp.com/users/${user.Username}`, {
+        fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser}`, {
             method: "DELETE",
             headers: { Authorization: `bearer ${token}` }
         })
@@ -74,8 +86,8 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
                 <Card className="mt-1 mb-2">
                     <Card.Body>
                         <Card.Title >Profile</Card.Title>
-                        <p>Username: {storedUser.Username}</p>
-                        <p>Email: {storedUser.Email}</p>
+                        <p>Username: {Info.Username}</p>
+                        <p>Email: {Info.Email}</p>
                     </Card.Body>
                 </Card>
                 <Button variant="danger" onClick={() => {
