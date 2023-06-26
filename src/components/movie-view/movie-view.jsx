@@ -5,15 +5,14 @@ import { useEffect, useState } from "react"
 import { Button } from 'react-bootstrap';
 
 
-
 export const MovieView = ({ movies, user, token, updateUser }) => {
     const { movieId } = useParams()
-    console.log(movies)
-    const movie = movies.find((m) => m._id === movieId);
+    console.log(movie)
+    const movie = movie.find((m) => m._id === movieId);
 
-    // const [isFavMovie, setIsFavMovie] = useState(
-    //     user?.favoriteMovies?.includes(movie?._id) || false
-    // )
+    const [isFavMovie, setIsFavMovie] = useState(
+        user?.favoriteMovies?.includes(movie?._id) || false
+    )
     
     useEffect(() => {
         setIsFavMovie(user?.favoriteMovies?.includes(movie?._id) || false)
@@ -70,7 +69,7 @@ export const MovieView = ({ movies, user, token, updateUser }) => {
         <div>
             <div>
                 <span>Title: </span>
-                <span>{movies.Title}</span>
+                <span>{movie.Title}</span>
             </div>
             <div>
                 <span>Description: </span>
