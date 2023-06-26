@@ -13,7 +13,6 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
     // const favoriteMovies = movies.filter((movie) => storedUser.favoriteMovies.includes(movie._id))
 
     useEffect(() => {
-        console.log('hello')
         if(!token){
             return;}
         fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser}`, {headers: {Authorization: `bearer ${token}`}})
@@ -108,15 +107,17 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
                                     value={Username}
                                     onChange={e => setUsername(e.target.value)}
                                     minLength="5"
+                                    required
                                 />
                             </Form.Group>
                             <Form.Group controlId="formPassword">
                                 <Form.Label>Password:</Form.Label>
                                 <Form.Control
-                                    type="Password"
+                                    type="password"
                                     value={Password}
                                     onChange={e => setPassword(e.target.value)}
                                     minLength="6"
+                                    required
                                 />
                             </Form.Group>
                             <Form.Group controlId="formEmail">
@@ -125,8 +126,11 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
                                     type="Email"
                                     value={Email}
                                     onChange={e => setEmail(e.target.value)}
+                                    required
                                 />
                             </Form.Group>
+                            <>After changing information you will be asked to login again.</>
+                            <br></br>
                             <Button className="mt-3" variant="primary" type="submit">Submit</Button>
                         </Form>
                     </Card.Body>

@@ -11,9 +11,9 @@ export const MovieView = ({ movies, user, token, updateUser }) => {
     console.log(movies)
     const movie = movies.find((m) => m._id === movieId);
 
-    const [isFavMovie, setIsFavMovie] = useState(
-        user?.favoriteMovies?.includes(movie?._id) || false
-    )
+    // const [isFavMovie, setIsFavMovie] = useState(
+    //     user?.favoriteMovies?.includes(movie?._id) || false
+    // )
     
     useEffect(() => {
         setIsFavMovie(user?.favoriteMovies?.includes(movie?._id) || false)
@@ -70,7 +70,7 @@ export const MovieView = ({ movies, user, token, updateUser }) => {
         <div>
             <div>
                 <span>Title: </span>
-                <span>{movie.Title}</span>
+                <span>{movies.Title}</span>
             </div>
             <div>
                 <span>Description: </span>
