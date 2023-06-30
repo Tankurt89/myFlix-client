@@ -3,14 +3,13 @@ import { Card, Col, Form, Button } from "react-bootstrap"
 import bcrypt from "bcryptjs"
 import { MovieCard } from "../movie-card/movie-card"
 
-export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) => {
+export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
     const [Username, setUsername] = useState("");
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState("");
     const [Info, setInfo ] = useState("")
     const storedUser = JSON.parse(localStorage.getItem("user"))
-
-    // const favoriteMovies = movies.filter((movie) => storedUser.favoriteMovies.includes(movie._id))
+    const favoriteMovies =  movies.filter(movie => Info.FavoriteMovies.includes(movie._id))
 
     useEffect(() => {
         if(!token){
@@ -56,6 +55,7 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
             if (user) {
                 alert("Successfully changed profile");
                 updateUser(user);
+                onLoggedOut()
             }
         })
         .catch(e => {
@@ -137,14 +137,14 @@ export const ProfileView = ({ user, token, movies, onLoggedOut, updateUser }) =>
                 </Card>
             </Col>
             <Col md={12}>
-                <Card className="mt-2 mb-3">
+                <Card>
                     <Card.Body>
                         <Card.Title>Favorite Movies:</Card.Title>
-                            {/* {favoriteMovies.map((movies)=>{
-                            <Col className="mb-4" key={movies._id}>
-                                <MovieCard movie={movies} />
-                            </Col> 
-                            })} */}
+                        {favoriteMovies.map((movie)=>(
+                            <Col className="mb-5" key={movie.id} md={12}>                            
+                            <MovieCard movie={movie}></MovieCard>
+                        </Col>
+                        ))}
                     </Card.Body>
                 </Card>
                 

@@ -4,28 +4,26 @@ import './movie-view.scss';
 import { useEffect, useState } from "react"
 import { Button } from 'react-bootstrap';
 
-
-export const MovieView = ({ movies, user, token, updateUser }) => {
+export const MovieView = ({ movies, user, token, updateUser}) => {
     const { movieId } = useParams()
-    console.log(movie)
-    const movie = movie.find((m) => m._id === movieId);
-
+    const movie = movies.find((m) => m._id === movieId);
+    const storedUser = JSON.parse(localStorage.getItem("user"))
     const [isFavMovie, setIsFavMovie] = useState(
         user?.favoriteMovies?.includes(movie?._id) || false
     )
-    
-    useEffect(() => {
-        setIsFavMovie(user?.favoriteMovies?.includes(movie?._id) || false)
-    }, [movieId])
 
     const addFavMovie = () => {
-        fetch(`https://agile-beach-16603.herokuapp.com/users/${user}/movies/${movieId}`,
+        fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser}/movies/${movieId}`,
         {
             method: "POST",
             headers: { Authorization: `bearer ${token}`}
         })
         .then((response) => {
+            console.log(response)
             if(response.ok){
+                alert("Successfully added to Favorites")
+                setIsFavMovie(true)
+                updateUser(user)
                 return response.json()
             }
             else{
@@ -33,15 +31,10 @@ export const MovieView = ({ movies, user, token, updateUser }) => {
                 return false
             }
         })
-        .then((user) => {
-            alert("Successfully added to Favorites")
-            setIsFavMovie(true)
-            updateUser(user)
-        })
     }
 
     const removeFavMovie = () => {
-        fetch(`https://agile-beach-16603.herokuapp.com/users/${user}/movies/${movieId}`,
+        fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser}/movies/${movieId}`,
           {
             method: "DELETE",
             headers: { Authorization: `Bearer ${token}` },
@@ -49,16 +42,14 @@ export const MovieView = ({ movies, user, token, updateUser }) => {
         )
           .then((response) => {
             if (response.ok) {
+                alert("Successfully deleted movie from Favorites!")
+                setIsFavMovie(false)
+                updateUser(user)
               return response.json();
             } else {
               alert("Failed to remove movie from Favorites");
               return false;
             }
-          })
-          .then((user) => {
-            alert("Successfully deleted movie from Favorites!");
-            setIsFavMovie(false);
-            updateUser(user);
           })
           .catch((e) => {
             alert(e);
@@ -106,10 +97,9 @@ export const MovieView = ({ movies, user, token, updateUser }) => {
                 <Button className="back-button">Back</Button>
             </Link>
             <p></p>
-            {isFavMovie? (
-                <Button variant="danger"onClick={removeFavMovie}>Remove from Favorites</Button>):(
-                <Button variant="success" onClick={addFavMovie}>Add to Favorites</Button>
-            )}
+            <Button variant="success" onClick={addFavMovie}>Add to Favorites</Button>
+            <br></br>
+            <Button variant="danger"onClick={removeFavMovie}>Remove from Favorites</Button>
         </div>
     )
 }

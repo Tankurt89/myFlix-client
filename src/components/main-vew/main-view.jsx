@@ -14,7 +14,7 @@ export const MainView = () => {
     const [user, setUser] = useState(storedUser? storedUser: null);
     const [token, setToken] =useState(storedToken? storedToken: null);
     const [movies, setMovies] = useState([]);
-    const [searchTerm, setSearchTerm]= useState("")
+
     const updateUser = user => {
         setUser(user)
         localStorage.setItem("user", JSON.stringify(user))
@@ -59,9 +59,9 @@ export const MainView = () => {
                     setUser(null)
                     setToken(null)
                     localStorage.clear()
+                    path="/login"
                 }}
-                searchTerm={searchTerm}
-                onSearchTermChange={(value) => setSearchTerm(value)}
+
             />
             <Row className="justify-content-md-center">
                 <Routes>
@@ -103,7 +103,7 @@ export const MainView = () => {
                                 <Col>The list is empty!</Col>
                             ) : (
                                 <Col md={8}>
-                                    <MovieView movies={movies} />
+                                    <MovieView movies={movies} user={user} token={token} updateUser={updateUser}/>
                                 </Col>
                                 )} 
                             </>
@@ -143,6 +143,8 @@ export const MainView = () => {
                                     setUser(null)
                                     setToken(null)
                                     localStorage.clear()
+                                    path="/"
+                                    path="/login"
                                 }} updateUser={updateUser}/>
                             )
                             }
