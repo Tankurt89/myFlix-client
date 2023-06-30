@@ -8,8 +8,8 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState("");
     const [Info, setInfo ] = useState("")
-    const storedUser = JSON.parse(localStorage.getItem("user"))
     const favoriteMovies =  movies.filter(movie => Info.FavoriteMovies.includes(movie._id))
+    const storedUser = JSON.parse(localStorage.getItem("user"))
 
     useEffect(() => {
         if(!token){
@@ -82,18 +82,18 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
     return (
         <>
             <Col md={6}>           
-                <Card className="mt-1 mb-2">
+                <Card className="mt-2 mb-3">
                     <Card.Body>
                         <Card.Title >Profile</Card.Title>
                         <p>Username: {Info.Username}</p>
                         <p>Email: {Info.Email}</p>
-                    </Card.Body>
-                </Card>
-                <Button variant="danger" onClick={() => {
+                        <Button variant="danger" onClick={() => {
                     if (confirm("Are you sure?")) {
                         deleteAccount();
                     }
                 }}>Delete user account</Button>
+                    </Card.Body>
+                </Card>
             </Col>
             <Col md={6}>
                 <Card className="mt-2 mb-3">

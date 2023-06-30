@@ -98,8 +98,8 @@ export const MovieView = ({ movies, user, token, updateUser}) => {
             </Link>
             <p></p>
             <Button variant="success" onClick={addFavMovie}>Add to Favorites</Button>
-            <br></br>
-            <Button variant="danger"onClick={removeFavMovie}>Remove from Favorites</Button>
+            <p></p>
+            <Button variant="danger" onClick={removeFavMovie}>Remove from Favorites</Button>
         </div>
     )
 }
