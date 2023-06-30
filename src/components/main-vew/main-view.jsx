@@ -8,12 +8,14 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { NavigationBar } from '../navigation-bar/navigation-bar';
 import { ProfileView } from '../profile-view/profile-view';
 
+
 export const MainView = () => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
     const [user, setUser] = useState(storedUser? storedUser: null);
     const [token, setToken] =useState(storedToken? storedToken: null);
     const [movies, setMovies] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("")
 
     const updateUser = user => {
         setUser(user)
@@ -61,7 +63,8 @@ export const MainView = () => {
                     localStorage.clear()
                     path="/login"
                 }}
-
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
             />
             <Row className="justify-content-md-center">
                 <Routes>
@@ -119,7 +122,12 @@ export const MainView = () => {
                                 <Col>The list is empty!</Col>
                             ) : (
                                 <>
-                                {movies.map((movie) => (
+                                {movies.filter((movie) => movie.Title.toLowerCase().includes(searchQuery.toLowerCase()
+                                ) || 
+                                movie.Genre.Name.toLowerCase().includes(searchQuery.toLowerCase()
+                                ) ||
+                                movie.Director.Name.toLowerCase().includes(searchQuery.toLowerCase()))
+                                .map((movie) => (
                                     <Col className="mb-5" key={movie.id} md={3}>
                                         <MovieCard
                                         movie={movie}/>
