@@ -22,6 +22,7 @@ export const MainView = () => {
         localStorage.setItem("user", JSON.stringify(user))
     }
 
+    //fetches the list of movies from the api and what information will need to be displayed as well. 
     useEffect(() => {
         if(!token){
             return;}
@@ -112,6 +113,7 @@ export const MainView = () => {
                             </>
                         }
                     />
+                    {/* this part of the code took me a few days to figure out. Mainly came down to not thinking about it clearly. movies was already defined and I had that information, so just rather than over complicating it, i stripped it down to the basics of 1) what I wanted to do 2)easiest way to do it 3)least amount of steps to do it.  */}
                     <Route
                         path="/"
                         element={
