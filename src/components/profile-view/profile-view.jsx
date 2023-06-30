@@ -11,6 +11,7 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
     const favoriteMovies =  movies.filter(movie => Info.FavoriteMovies.includes(movie._id))
     const storedUser = JSON.parse(localStorage.getItem("user"))
 
+    //this use effect returns all the information stored in the token which will allow me to use that further down to display the users Username and Email on the profile page. 
     useEffect(() => {
         if(!token){
             return;}
@@ -35,6 +36,7 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
             Email: Email,
         }
 
+        //this fetch/put allows the user to update their user information
         fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser}`, {
             method: "PUT",
             body: JSON.stringify(data),
@@ -62,6 +64,8 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
             alert(e);
         });
     }
+
+    //allows the user to delete their account
     const deleteAccount = () => {
         fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser}`, {
             method: "DELETE",
@@ -83,10 +87,12 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
         <>
             <Col md={6}>           
                 <Card className="mt-2 mb-3">
+                    {/* This calls on the information that we had gathered earlier to display the users Username and Email  */}
                     <Card.Body>
                         <Card.Title >Profile</Card.Title>
                         <p>Username: {Info.Username}</p>
                         <p>Email: {Info.Email}</p>
+                        {/* Added this button that will allow the user to delete their account only after confirming that is what they want to do */}
                         <Button variant="danger" onClick={() => {
                     if (confirm("Are you sure?")) {
                         deleteAccount();
@@ -98,6 +104,7 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
             <Col md={6}>
                 <Card className="mt-2 mb-3">
                     <Card.Body>
+                        {/* This section allows the user to update their username/password/email, all sections are required to be filled out  */}
                         <Card.Title>Update your info</Card.Title>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group controlId="formUsername">
@@ -139,6 +146,7 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
             <Col md={12}>
                 <Card>
                     <Card.Body>
+                        {/* Displays the movie card of the movies that the user has set as their favorite and allows them to go to the movie view where they can remove if they please */}
                         <Card.Title>Favorite Movies:</Card.Title>
                         {favoriteMovies.map((movie)=>(
                             <Col className="mb-5" key={movie.id} md={12}>                            

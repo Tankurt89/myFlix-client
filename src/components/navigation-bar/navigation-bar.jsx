@@ -1,6 +1,8 @@
 import { Navbar, Container, Nav, Form, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+//General navbar setup that will also change what is displayed depending on if a user is signed in or not
+
 export const NavigationBar = ({ user, onLoggedOut, searchQuery, setSearchQuery }) => {
   return (
     <Navbar bg="light" expand="lg">

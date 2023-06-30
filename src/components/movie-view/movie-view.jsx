@@ -11,7 +11,7 @@ export const MovieView = ({ movies, user, token, updateUser}) => {
     const [isFavMovie, setIsFavMovie] = useState(
         user?.favoriteMovies?.includes(movie?._id) || false
     )
-
+        // Allows the user to add a favorite movie to their profile
     const addFavMovie = () => {
         fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser}/movies/${movieId}`,
         {
@@ -32,7 +32,7 @@ export const MovieView = ({ movies, user, token, updateUser}) => {
             }
         })
     }
-
+    //allows the user to remove the movie from their favorite movie list on their profile
     const removeFavMovie = () => {
         fetch(`https://agile-beach-16603.herokuapp.com/users/${storedUser}/movies/${movieId}`,
           {
