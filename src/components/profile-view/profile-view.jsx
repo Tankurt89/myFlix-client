@@ -9,6 +9,7 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
     const [Email, setEmail] = useState("");
     const [Info, setInfo ] = useState("")
     const [favoriteMovies, setFavoriteMovies] = useState([])
+    // moved the filter function to inside the useEffect because of  an error that was causing it to not load correctly. Upon moving it there and then setting up a useSate it caused the it to function as intended. 
     const storedUser = JSON.parse(localStorage.getItem("user"))
 
     //this use effect returns all the information stored in the token which will allow me to use that further down to display the users Username and Email on the profile page. 
