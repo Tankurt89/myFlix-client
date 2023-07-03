@@ -29,7 +29,6 @@ export const MainView = () => {
         fetch("https://agile-beach-16603.herokuapp.com/movies", {headers: {Authorization: `bearer ${token}`}})
         .then((response) => response.json())
         .then((data) => {
-            console.log('data', data);
             const moviesFromApi = data.map((movies) => {
                 return{
                     _id: movies._id,
