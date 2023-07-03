@@ -8,7 +8,7 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
     const [Password, setPassword] = useState("");
     const [Email, setEmail] = useState("");
     const [Info, setInfo ] = useState("")
-    const favoriteMovies =  movies.filter(movie => Info.FavoriteMovies.includes(movie._id))
+    const [favoriteMovies, setFavoriteMovies] = useState([])
     const storedUser = JSON.parse(localStorage.getItem("user"))
 
     //this use effect returns all the information stored in the token which will allow me to use that further down to display the users Username and Email on the profile page. 
@@ -19,14 +19,16 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
         .then((response) => response.json())
         .then((storedInfo) => {
             setInfo(storedInfo)
-            })
+            setFavoriteMovies(movies.filter(movie => storedInfo.FavoriteMovies.includes(movie._id)))
+            console.log(storedInfo)
+        })
         .catch((error) => {
             console.log('Error fetching user:', error)
         })
     }, [token])
 
     const handleSubmit = event => {
-        event.preventDefault();
+        // event.preventDefault();
 
         const hashedPassword = bcrypt.hashSync(Password, 10)
 
