@@ -31,11 +31,11 @@ export const ProfileView = ({ token, movies, onLoggedOut, updateUser }) => {
     const handleSubmit = event => {
         // event.preventDefault();
 
-        const hashedPassword = bcrypt.hashSync(Password, 10)
+       
 
         const data = {
             Username: Username,
-            Password: hashedPassword,
+            Password: Password,
             Email: Email,
         }
 
